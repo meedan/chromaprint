@@ -6,7 +6,7 @@ import subprocess
 current_dir = os.path.abspath(os.path.dirname(__file__))
 
 # Set the path to the chromaprint source directory
-chromaprint_dir = os.path.join(current_dir, "chromaprint")
+chromaprint_dir = os.path.join(current_dir, ".")
 
 # Run the necessary commands
 subprocess.run(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-DBUILD_TOOLS=ON", "."], cwd=chromaprint_dir)
