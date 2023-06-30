@@ -22,7 +22,7 @@ public:
 private:
 	void UnpackBits();
 	std::vector<uint32_t> m_output;
-	int m_algorithm { -1 };
+    int m_algorithm = -1;  // Initialize m_algorithm
 	std::vector<unsigned char> m_bits;
 	std::vector<unsigned char> m_exceptional_bits;
 };
