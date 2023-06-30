@@ -52,7 +52,7 @@ public:
 	// Anything above this is not considered a match.
 	void set_match_threshold(double t) { m_match_threshold = t; }
 	double match_threshold() const { return m_match_threshold; }
-	static constexpr double kDefaultMatchThreshold = 10.0;
+    static const double kDefaultMatchThreshold = 10.0;
 
 	bool Match(const std::vector<uint32_t> &fp1, const std::vector<uint32_t> &fp2);
 	bool Match(const uint32_t fp1_data[], size_t fp1_size, const uint32_t fp2_data[], size_t fp2_size);
@@ -66,7 +66,7 @@ private:
 	std::unique_ptr<FingerprinterConfiguration> m_config;
 	std::vector<uint32_t> m_offsets;
 	std::vector<uint32_t> m_histogram;
-	std::vector<std::pair<uint32_t, uint32_t>> m_best_alignments;
+	std::vector<std::pair<uint32_t, uint32_t> > m_best_alignments;
 	std::vector<Segment> m_segments;
 	double m_match_threshold = kDefaultMatchThreshold;
 };
