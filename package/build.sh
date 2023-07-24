@@ -7,8 +7,8 @@ set -eux
 
 BASE_DIR=$(cd $(dirname $0)/.. && pwd)
 
-FFMPEG_VERSION=5.1.2
-FFMPEG_BUILD_TAG=v${FFMPEG_VERSION}-1
+FFMPEG_VERSION=4.4.1
+FFMPEG_BUILD_TAG=v4.4.1-1
 
 TMP_BUILD_DIR=$BASE_DIR/$(mktemp -d build.XXXXXXXX)
 trap 'rm -rf $TMP_BUILD_DIR' EXIT
@@ -43,13 +43,6 @@ case $OS in
                 )
                 TARGET=$ARCH-linux-gnu
                 ;;
-            arm64)
-                perl -pe "s!{EXTRA_PATHS}!$FFMPEG_DIR!g" $BASE_DIR/package/toolchain-aarch64.cmake.in >toolchain.cmake
-                CMAKE_ARGS+=(
-                    -DCMAKE_TOOLCHAIN_FILE=$TMP_BUILD_DIR/toolchain.cmake
-                )
-                TARGET=$ARCH-linux-gnu
-                ;;
             *)
                 echo "Unsupported architecture: $ARCH"
                 exit 1
@@ -72,10 +65,10 @@ case $OS in
         case $ARCH in
             x86_64)
                 CMAKE_ARGS+=(
-                    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.9"
+                    -DCMAKE_OSX_DEPLOYMENT_TARGET="10.8"
                     -DCMAKE_OSX_ARCHITECTURES="x86_64"
                 )
-                TARGET=x86_64-apple-macos10.9
+                TARGET=x86_64-apple-macos10.8
                 ;;
             arm64)
                 CMAKE_ARGS+=(
@@ -97,7 +90,7 @@ case $OS in
 esac
 
 curl -s -L "https://github.com/acoustid/ffmpeg-build/releases/download/$FFMPEG_BUILD_TAG/ffmpeg-$FFMPEG_VERSION-audio-$TARGET.tar.gz" | tar xz
-mv ffmpeg-*/* $FFMPEG_DIR
+mv ffmpeg-*/ffmpeg-*/* $FFMPEG_DIR
 
 CMAKE_ARGS+=(
     -DCMAKE_INSTALL_PREFIX=$BASE_DIR/artifacts
